@@ -22,11 +22,21 @@ async function run() {
     const bookcategorycollection = client
       .db("bookwarm")
       .collection("categorey");
+    const productcolection = client.db("bookwarm").collection("product");
 
     app.get("/categorey", async (req, res) => {
       const query = {};
       const cursor = bookcategorycollection.find(query);
       const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/categorey/:type", async (req, res) => {
+      const type = req.params.type;
+      console.log(type);
+      const result = await productcolection.find({ type: type }).toArray();
+      console.log(result);
+
       res.send(result);
     });
   } finally {
