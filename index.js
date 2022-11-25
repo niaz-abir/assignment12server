@@ -34,15 +34,22 @@ async function run() {
 
     app.get("/categorey/:type", async (req, res) => {
       const type = req.params.type;
-      console.log(type);
+      //   console.log(type);
       const result = await productcolection.find({ type: type }).toArray();
-      console.log(result);
+      //   console.log(result);
 
       res.send(result);
     });
 
     app.post("/user/new", async (req, res) => {
       const response = await usercollection.insertOne(req.body);
+      //   console.log(req.body);
+      res.send(response);
+    });
+
+    app.get("/user/type/:emai", async (req, res) => {
+      const email = req.params.email;
+      const response = await usercollection.findOne({ email: email });
       res.send(response);
     });
   } finally {
