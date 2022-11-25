@@ -47,10 +47,10 @@ async function run() {
       res.send(response);
     });
 
-    app.get("/user/type/:emai", async (req, res) => {
+    app.get("/user/type/:email", async (req, res) => {
       const email = req.params.email;
       const response = await usercollection.findOne({ email: email });
-      res.send(response);
+      res.send(response.type);
     });
   } finally {
   }
