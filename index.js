@@ -23,6 +23,7 @@ async function run() {
       .db("bookwarm")
       .collection("categorey");
     const productcolection = client.db("bookwarm").collection("product");
+    const usercollection = client.db("bookwarm").collection("users");
 
     app.get("/categorey", async (req, res) => {
       const query = {};
@@ -38,6 +39,11 @@ async function run() {
       console.log(result);
 
       res.send(result);
+    });
+
+    app.post("/user/new", async (req, res) => {
+      const response = await usercollection.insertOne(req.body);
+      res.send(response);
     });
   } finally {
   }
