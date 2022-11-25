@@ -52,6 +52,18 @@ async function run() {
       const response = await usercollection.findOne({ email: email });
       res.send(response.type);
     });
+
+    app.post("/products/new", async (req, res) => {
+      const newproduct = req.body;
+      const response = await productcolection.insertOne(newproduct);
+      res.send(response);
+    });
+
+    app.get("/myproduct/:email", async (req, res) => {
+      const email = req.params.email;
+      const response = await productcolection.find({ seller: email }).toArray();
+      res.send(response);
+    });
   } finally {
   }
 }
