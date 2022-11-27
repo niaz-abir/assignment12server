@@ -47,6 +47,17 @@ async function run() {
       res.send(response);
     });
 
+    app.get("/user/all-seller", async (req, res) => {
+      const query = { type: "seller" };
+      const response = await usercollection.find(query).toArray();
+      res.send(response);
+    });
+    app.get("/user/all-buyer", async (req, res) => {
+      const query = { type: "buyer" };
+      const response = await usercollection.find(query).toArray();
+      res.send(response);
+    });
+
     app.get("/user/type/:email", async (req, res) => {
       const email = req.params.email;
       const response = await usercollection.findOne({ email: email });
