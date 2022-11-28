@@ -24,6 +24,7 @@ async function run() {
       .collection("categorey");
     const productcolection = client.db("bookwarm").collection("product");
     const usercollection = client.db("bookwarm").collection("users");
+    const ordercollection = client.db("bookwarm").collection("orders");
 
     app.get("/categorey", async (req, res) => {
       const query = {};
@@ -69,9 +70,28 @@ async function run() {
       const response = await productcolection.insertOne(newproduct);
       res.send(response);
     });
-    app.delete("/my-products/delete/:id", async (req, res) => {
+    app.get("/products", async (req, res) => {
+      const email = req.query.email;
+      const response = await productcolection.find({ seller: email }).toArray();
+      res.send(response);
+    });
+
+    app.delete("/user/delete/:id", async (req, res) => {
       const id = req.params.id;
-      const response = await productcolection.deleteOne({ _id: ObjectId(id) });
+      const response = await usercollection.deleteOne({ _id: ObjectId(id) });
+      console.log(response);
+      res.send(response);
+    });
+    app.post("/orders", async (req, res) => {
+      const formdata = req.body;
+      console.log(formdata);
+      const response = await ordercollection.insertOne(formdata);
+
+      res.send(response);
+    });
+    app.get("/orders", async (req, res) => {
+      const email = req.query.email;
+      const response = await ordercollection.find({ email: email }).toArray();
       res.send(response);
     });
 
